@@ -23,7 +23,7 @@ function Register({ handleRegister  }) {
 
   return (
     <section className="content-autorize">
-        <h1 className="autorize__title">Регистрация</h1>
+        <h2 className="autorize__title">Регистрация</h2>
         <form onSubmit={handleSubmit}>
             <label className="field">
                 <input

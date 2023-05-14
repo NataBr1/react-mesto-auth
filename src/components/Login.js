@@ -19,11 +19,14 @@ function Login({ handleLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formValue.email || !formValue.password) {
+      return;
+    }
     const { password, email } = formValue;
     auth.authorize(password, email)
-      .then((data) => {
-        if (data.jwt) {
-          localStorage.setItem('jwt', data.jwt);
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
           handleLogin();
           navigate('/', {replace: true});
         }
@@ -33,7 +36,7 @@ function Login({ handleLogin }) {
 
   return (
     <section className="content-autorize">
-        <h1 className="autorize__title">Вход</h1>
+        <h2 className="autorize__title">Вход</h2>
         <form onSubmit={handleSubmit}>
             <label className="field">
                 <input

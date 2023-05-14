@@ -188,21 +188,22 @@ function App() {
               <Register handleRegister={handleRegister} />
             </>
           } />
-          <Route path="/" element={<ProtectedRoute element={
+          <Route path="/" element={
             <>
-              <Header email="email@mail.ru" title="Выйти" />
-              <Main
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleDeleteCardClick}
-                  cards={cards} />
+              <Header email="email@mail.ru" title="Выйти" link="/sign-up" />
+              <ProtectedRoute element={Main}
+                loggedIn={loggedIn}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleDeleteCardClick}
+                cards={cards} />
               <Footer />
             </>
-          } loggedIn={loggedIn} />} />
-          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} />
+          } />
+          {/* <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} /> */}
         </Routes>
 
         <EditProfilePopup
