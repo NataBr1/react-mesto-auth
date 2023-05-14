@@ -1,0 +1,11 @@
+.popup__autorize {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all .3s linear;
+  /* opacity: 0;
+  overflow: hidden; */
+}
