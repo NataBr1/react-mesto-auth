@@ -19,20 +19,9 @@ function Login({ handleLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formValue.email || !formValue.password) {
-      return;
-    }
     const { password, email } = formValue;
-    auth.authorize(password, email)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          handleLogin();
-          navigate('/', {replace: true});
-        }
-      })
-      .catch(err => console.log(err));
-    }
+    handleLogin(password, email);
+  }
 
   return (
     <section className="content-autorize">

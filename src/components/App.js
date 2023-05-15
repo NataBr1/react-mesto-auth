@@ -30,6 +30,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState(null);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
       })
   }, []);
 
+  //Регистрация пользователя
   function handleRegister (password, email) {
     auth.register(password, email)
       .then(() => {
@@ -62,9 +64,41 @@ function App() {
       })
   }
 
-  function handleLogin () {
-    setLoggedIn(true);
+  //Авторизация пользователя
+  function handleLogin (password, email) {
+    auth.authorize(password, email)
+      .then((res) => {
+        if (res.token) {
+          setLoggedIn(true);
+          setUserEmail(email);
+          localStorage.setItem('jwt', res.token);
+          navigate('/', {replace: true});
+        }
+      })
+      .catch(err => console.log(err));
   }
+
+  //Проверка токена
+  function tokenCheck () {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.getContent(jwt)
+        .then((user) => {
+          if (user.data) {
+            setLoggedIn(true);
+            setUserEmail(user.data.email);
+            navigate("/", {replace: true});
+          }
+        })
+        .catch((err) => {
+          console.log(`${err}`);
+        })
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck()
+  }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -190,7 +224,7 @@ function App() {
           } />
           <Route path="/" element={
             <>
-              <Header email="email@mail.ru" title="Выйти" link="/sign-up" />
+              <Header email={userEmail} title="Выйти" link="/sign-up" />
               <ProtectedRoute element={Main}
                 loggedIn={loggedIn}
                 onEditAvatar={handleEditAvatarClick}
