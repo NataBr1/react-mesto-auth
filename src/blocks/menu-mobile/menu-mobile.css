@@ -1,7 +1,7 @@
 .menu-mobile {
   display: none;
 }
-@media (max-width: 320px) {
+@media (max-width: 550px) {
   .menu-mobile {
     display: block;
     width: 24px;

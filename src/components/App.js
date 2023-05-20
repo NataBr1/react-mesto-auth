@@ -86,7 +86,7 @@ function App() {
           navigate('/', {replace: true});
           handleResPopup();
           setImgResAuth(hello);
-          setTextResAuth(`Привет, ${email}!`)
+          setTextResAuth("Привет!")
         }
       })
       .catch((err) => {
