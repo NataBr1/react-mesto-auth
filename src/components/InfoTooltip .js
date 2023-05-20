@@ -1,9 +1,9 @@
 import React from "react";
 
 
-function InfoTooltip ({ imgResAuth, textResAuth }) {
+function InfoTooltip ({ isOpen, imgResAuth, textResAuth, onClose }) {
   return (
-    <div className="popup__autorize" >
+    <div className={`popup ${isOpen ? `popup_opened`: ""}`} >
         <div className="popup__container">
           <img className="autorize__res-img"
             src={imgResAuth}
@@ -14,6 +14,7 @@ function InfoTooltip ({ imgResAuth, textResAuth }) {
             className="popup__closed link-hover"
             type="button"
             aria-label="Закрыть"
+            onClick={onClose}
           />
         </div>
     </div>

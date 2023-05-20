@@ -12,12 +12,13 @@ import AddPlacePopup from './AddPlacePopup ';
 import ConfirmDeleteCard from './ConfirmDeleteCard';
 import Login from './Login';
 import Register from './Register';
-//import InfoTooltip from './InfoTooltip ';
+import InfoTooltip from './InfoTooltip ';
 import ProtectedRoute from './ProtectedRoute';
 import api from "../utils/Api";
 import * as auth from '../utils/auth.js';
 import success from '../images/success.svg'
 import error from '../images/error.svg'
+import hello from '../images/hello.png'
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -25,12 +26,16 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isViewPhoto, setIsViewPhoto] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
+  const [isResPopup, setIsResPopup] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState(null);
+  const [imgResAuth, setImgResAuth] = React.useState("");
+  const [textResAuth, setTextResAuth] = React.useState("");
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -58,9 +63,15 @@ function App() {
     auth.register(password, email)
       .then(() => {
         navigate("/sign-in", { replace: true });
+        handleResPopup();
+        setImgResAuth(success);
+        setTextResAuth("Вы успешно зарегистрировались!")
       })
       .catch((err) => {
         console.log(`${err}`);
+        handleResPopup();
+        setImgResAuth(error);
+        setTextResAuth("Что-то пошло не так! Попробуйте еще раз")
       })
   }
 
@@ -73,9 +84,17 @@ function App() {
           setUserEmail(email);
           localStorage.setItem('jwt', res.token);
           navigate('/', {replace: true});
+          handleResPopup();
+          setImgResAuth(hello);
+          setTextResAuth(`Привет, ${email}!`)
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(`${err}`);
+        handleResPopup();
+        setImgResAuth(error);
+        setTextResAuth("Что-то пошло не так! Попробуйте еще раз")
+      })
   }
 
   //Проверка токена
@@ -99,6 +118,12 @@ function App() {
   React.useEffect(() => {
     tokenCheck()
   }, []);
+
+  //Выход
+  function signOut() {
+    localStorage.removeItem('jwt');
+    navigate('/sign-in');
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -197,14 +222,20 @@ function App() {
     setSelectedCard(card)
   }
 
+  function handleResPopup() {
+    setIsResPopup(true)
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsViewPhoto(false)
     setIsDeleteCardPopupOpen(false)
+    setIsResPopup(false)
     setSelectedCard(null)
   }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -224,7 +255,7 @@ function App() {
           } />
           <Route path="/" element={
             <>
-              <Header email={userEmail} title="Выйти" link="/sign-up" />
+              <Header onClick={signOut} email={userEmail} title="Выйти" link="/sign-up" />
               <ProtectedRoute element={Main}
                 loggedIn={loggedIn}
                 onEditAvatar={handleEditAvatarClick}
@@ -237,7 +268,7 @@ function App() {
               <Footer />
             </>
           } />
-          {/* <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />} /> */}
+          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-up" />} />
         </Routes>
 
         <EditProfilePopup
@@ -266,6 +297,11 @@ function App() {
             onDeleteCard={handleCardDelete}
             card={selectedCard}
             isLoading={isLoading}/>
+        <InfoTooltip
+            isOpen ={isResPopup}
+            imgResAuth = {imgResAuth}
+            textResAuth = {textResAuth}
+            onClose={closeAllPopups}/>
 
       </div>
     </CurrentUserContext.Provider>
