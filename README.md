@@ -13,10 +13,11 @@
 
 **Установка и запуск приложения:**
 Клонировать репозиторий:
-git clone git@github.com:NataBr1/react-mesto-auth.git
+git clone
+  git@github.com:NataBr1/react-mesto-auth.git
 
 Запустить приложение:
-npm start
+  npm start
 
 Ссылка на сайт:
 https://natabr1.github.io/react-mesto-auth
