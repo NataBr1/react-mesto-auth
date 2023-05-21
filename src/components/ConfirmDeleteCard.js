@@ -1,5 +1,6 @@
 import React from "react";
 import usePopupClose from "../hooks/usePopupClose";
+import PopupWithForm from "./PopupWithForm";
 
 function ConfirmDeleteCard({ isOpen, onClose, isLoading, onDeleteCard, card}) {
 
@@ -11,24 +12,14 @@ function ConfirmDeleteCard({ isOpen, onClose, isLoading, onDeleteCard, card}) {
   }
 
   return (
-      <div className={`popup popup_deletecard ${isOpen ? `popup_opened`: ""}`}>
-          <div className="popup__container">
-              <form
-                  className="popup__form popup__form_delete"
-                  name="popupFormDelete"
-                  onSubmit={handleSubmit}
-                  >
-                  <h2 className="popup__title popup__title_deletecard">Вы уверены?</h2>
-                  <button className="popup__button" type="submit" aria-label="Да">{isLoading ? 'Удаление...' : 'Да'}</button>
-              </form>
-              <button
-                  className="popup__closed link-hover confirmation"
-                  type="button"
-                  aria-label="Закрыть"
-                  onClick={onClose}
-              />
-          </div>
-      </div>
+    <PopupWithForm
+      isOpen={isOpen}
+      title="Вы уверены?"
+      classNameTitle="popup__title popup__title_deletecard"
+      buttonTitle={isLoading ? 'Удаление...' : 'Да'}
+      onClose={onClose}
+      onSubmit={handleSubmit} >
+    </PopupWithForm>
   );
 }
 

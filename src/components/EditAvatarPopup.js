@@ -17,7 +17,14 @@ function EditAvatarPopup({ onUpdateAvatar, isOpen, onClose, isLoading }) {
   }, [isOpen]);
 
   return (
-    <PopupWithForm isOpen={isOpen} name="avatar" title="Обновить аватар" buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'} onClose={onClose} onSubmit={handleSubmit} >
+    <PopupWithForm
+      isOpen={isOpen}
+      title="Обновить аватар"
+      classNameTitle="popup__title"
+      buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onClose={onClose}
+      onSubmit={handleSubmit} >
+
         <label className="field">
             <input
               id="avatar-input"
@@ -30,6 +37,7 @@ function EditAvatarPopup({ onUpdateAvatar, isOpen, onClose, isLoading }) {
             />
             <span className="popup__input-error avatar-input-error" />
         </label>
+
     </PopupWithForm>
   );
 }

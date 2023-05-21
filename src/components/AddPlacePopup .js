@@ -21,7 +21,15 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace, isLoading }) {
   }, [isOpen]);
 
   return (
-    <PopupWithForm isOpen={isOpen} name="place" title="Новое место" buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'} onClose={onClose} onAddPlace={onAddPlace} onSubmit={handleSubmit} >
+    <PopupWithForm
+      isOpen={isOpen}
+      title="Новое место"
+      classNameTitle="popup__title"
+      buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onClose={onClose}
+      onAddPlace={onAddPlace}
+      onSubmit={handleSubmit} >
+
         <label className="field">
             <input
               id="place-input"
@@ -51,6 +59,7 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace, isLoading }) {
             />
             <span className="popup__input-error link-input-error" />
         </label>
+
     </PopupWithForm>
   );
 }

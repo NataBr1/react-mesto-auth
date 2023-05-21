@@ -27,7 +27,7 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
               aria-label="Редактировать профиль"
               onClick={onEditProfile}
             />
-            <p className="profile__subtitle">{currentUser.about}</p> 
+            <p className="profile__subtitle">{currentUser.about}</p>
           </div>
 
         </div>
@@ -43,12 +43,9 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
 
       {/* Карточки */}
       <section className="elements">
-        {cards.map((card, _id) => (
+        {cards.map((card, index) => (
             <Card
-              key={card._id}
-              link={card.link}
-              name={card.name}
-              likes={card.likes.length}
+              key={index}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}

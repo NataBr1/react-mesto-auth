@@ -26,50 +26,46 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isViewPhoto, setIsViewPhoto] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
-  const [isResPopup, setIsResPopup] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoadingConfirm, setIsLoadingConfirm] = React.useState(false);
+  const [isLoadingAvatar, setIsLoadingAvatar] = React.useState(false);
+  const [isLoadingUser, setIsLoadingUser] = React.useState(false);
+  const [isLoadingPlace, setIsLoadingPlace] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userEmail, setUserEmail] = React.useState(null);
+  const [userEmail, setUserEmail] = React.useState("");
   const [imgResAuth, setImgResAuth] = React.useState("");
   const [textResAuth, setTextResAuth] = React.useState("");
 
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    api.getInitialCards()
-      .then(cardData => {
+    if (loggedIn) {
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cardData, res]) => {
         setCards(cardData);
+        setCurrentUser(res);
       })
       .catch((err) => {
         console.log(`${err}`);
-      })
-  }, [])
-
-  React.useEffect(() => {
-    api.getUserInfo()
-      .then(res => {
-        setCurrentUser(res)
-      })
-      .catch((err) => {
-        console.log(`${err}`);
-      })
-  }, []);
+      });
+    }
+  }, [loggedIn]);
 
   //Регистрация пользователя
   function handleRegister (password, email) {
     auth.register(password, email)
       .then(() => {
         navigate("/sign-in", { replace: true });
-        handleResPopup();
+        handleOpenInfoTooltip();
         setImgResAuth(success);
         setTextResAuth("Вы успешно зарегистрировались!")
       })
       .catch((err) => {
         console.log(`${err}`);
-        handleResPopup();
+        handleOpenInfoTooltip();
         setImgResAuth(error);
         setTextResAuth("Что-то пошло не так! Попробуйте еще раз")
       })
@@ -84,24 +80,24 @@ function App() {
           setUserEmail(email);
           localStorage.setItem('jwt', res.token);
           navigate('/', {replace: true});
-          handleResPopup();
+          handleOpenInfoTooltip();
           setImgResAuth(hello);
           setTextResAuth("Привет!")
         }
       })
       .catch((err) => {
         console.log(`${err}`);
-        handleResPopup();
+        handleOpenInfoTooltip();
         setImgResAuth(error);
         setTextResAuth("Что-то пошло не так! Попробуйте еще раз")
       })
   }
 
   //Проверка токена
-  function tokenCheck () {
+  function checkToken () {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      auth.getContent(jwt)
+      auth.checkToken(jwt)
         .then((user) => {
           if (user.data) {
             setLoggedIn(true);
@@ -116,7 +112,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    tokenCheck()
+    checkToken()
   }, []);
 
   //Выход
@@ -148,6 +144,7 @@ function App() {
 
  //удаление карточки
  function handleCardDelete(card) {
+  setIsLoadingConfirm(true)
   api.deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((item) => item._id !== card._id));
@@ -156,11 +153,14 @@ function App() {
       .catch((err) => {
         console.log(`${err}`);
       })
+      .finally(() => {
+        setIsLoadingConfirm(false)
+      })
   }
 
   //изменение данных о пользователе
   function handleUpdateUser(data) {
-    setIsLoading(true);
+    setIsLoadingUser(true);
     api.setUserInfo(data)
       .then((res) => {
         setCurrentUser(res);
@@ -168,13 +168,13 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsLoading(false)
+        setIsLoadingUser(false)
       })
   }
 
   //смена аватара
   function handleUpdateAvatar(data) {
-    setIsLoading(true);
+    setIsLoadingAvatar(true);
     api.setUserAvatar(data)
       .then((res) => {
         setCurrentUser(res);
@@ -182,13 +182,13 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsLoading(false)
+        setIsLoadingAvatar(false)
       })
   }
 
   //добавление карточки
   function handleAddPlaceSubmit(data) {
-    setIsLoading(true);
+    setIsLoadingPlace(true);
     api.addCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -196,7 +196,7 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsLoading(false)
+        setIsLoadingPlace(false)
       })
   }
 
@@ -222,8 +222,8 @@ function App() {
     setSelectedCard(card)
   }
 
-  function handleResPopup() {
-    setIsResPopup(true)
+  function handleOpenInfoTooltip() {
+    setIsInfoTooltipOpen(true)
   }
 
   function closeAllPopups() {
@@ -232,7 +232,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsViewPhoto(false)
     setIsDeleteCardPopupOpen(false)
-    setIsResPopup(false)
+    setIsInfoTooltipOpen(false)
     setSelectedCard(null)
   }
 
@@ -275,17 +275,17 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            isLoading={isLoading} />
+            isLoading={isLoadingUser} />
         <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
-            isLoading={isLoading} />
+            isLoading={isLoadingAvatar} />
         <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
-            isLoading={isLoading} />
+            isLoading={isLoadingPlace} />
         <PopupWithForm name="deletecard" title="Вы уверены?" buttonTitle="Да" />
         <ImagePopup
             isOpen={isViewPhoto}
@@ -296,9 +296,9 @@ function App() {
             onClose={closeAllPopups}
             onDeleteCard={handleCardDelete}
             card={selectedCard}
-            isLoading={isLoading}/>
+            isLoading={isLoadingConfirm}/>
         <InfoTooltip
-            isOpen ={isResPopup}
+            isOpen ={isInfoTooltipOpen}
             imgResAuth = {imgResAuth}
             textResAuth = {textResAuth}
             onClose={closeAllPopups}/>

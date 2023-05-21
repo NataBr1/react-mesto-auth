@@ -23,7 +23,14 @@ function EditProfilePopup( {onUpdateUser, isOpen, onClose, isLoading }) {
   }, [isOpen, currentUser]);
 
   return (
-    <PopupWithForm isOpen={isOpen} name="user" title="Редактировать профиль" buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'} onClose={onClose} onSubmit={handleSubmit} >
+    <PopupWithForm
+      isOpen={isOpen}
+      title="Редактировать профиль"
+      classNameTitle="popup__title"
+      buttonTitle={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onClose={onClose}
+      onSubmit={handleSubmit} >
+
         <label className="field">
             <input
               id="name-input"
@@ -55,6 +62,7 @@ function EditProfilePopup( {onUpdateUser, isOpen, onClose, isLoading }) {
             />
             <span className="popup__input-error job-input-error" />
         </label>
+
     </PopupWithForm>
   );
 }
