@@ -16,8 +16,16 @@
 @import url(./blocks/autorize/__link/autorize__link.css);
 @import url(./blocks/autorize/__res-img/autorize__res-img.css);
 @import url(./blocks/autorize/__res-text/autorize__res-text.css);
+@import url(./blocks/autorize/__mobile/autorize__mobile.css);
+@import url(./blocks/autorize/__wrapper/autorize__wrapper.css);
+@import url(./blocks/autorize/__wrapper/_opened/autorize__wrapper_opened.css);
+@import url(./blocks/autorize/__closed/autorize__closed.css);
+@import url(./blocks/autorize/__closed/_disactive/autorize__closed_disactive.css);
+@import url(./blocks/autorize/__exit/autorize__exit.css);
 
 @import url(./blocks/menu-mobile/menu-mobile.css);
+@import url(./blocks/menu-mobile/__line/menu-mobile__line.css);
+@import url(./blocks/menu-mobile/_disactive/menu-mobile_disactive.css);
 
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);

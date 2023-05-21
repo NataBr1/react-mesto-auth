@@ -19,6 +19,7 @@ import * as auth from '../utils/auth.js';
 import success from '../images/success.svg'
 import error from '../images/error.svg'
 import hello from '../images/hello.png'
+import MenuMobile from './MenuMobile';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -27,6 +28,7 @@ function App() {
   const [isViewPhoto, setIsViewPhoto] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [isMenuMobile, setIsMenuMobile] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -226,6 +228,10 @@ function App() {
     setIsInfoTooltipOpen(true)
   }
 
+  function handleOpenMenuMobile() {
+    setIsMenuMobile(true)
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
@@ -233,6 +239,7 @@ function App() {
     setIsViewPhoto(false)
     setIsDeleteCardPopupOpen(false)
     setIsInfoTooltipOpen(false)
+    setIsMenuMobile(false)
     setSelectedCard(null)
   }
 
@@ -240,6 +247,12 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
+        <MenuMobile
+          isOpen={isMenuMobile}
+          onClick={signOut}
+          email={userEmail}
+          title="Выйти"
+          link="/sign-up"/>
         <Routes>
           <Route path="/sign-in" element={
             <>
@@ -255,7 +268,14 @@ function App() {
           } />
           <Route path="/" element={
             <>
-              <Header onClick={signOut} email={userEmail} title="Выйти" link="/sign-up" />
+              <Header
+                onClick={signOut}
+                email={userEmail}
+                title="Выйти"
+                link="/sign-up"
+                openMenuMobile={handleOpenMenuMobile}
+                isOpen={isMenuMobile}
+                closeMenuMobile={closeAllPopups} />
               <ProtectedRoute element={Main}
                 loggedIn={loggedIn}
                 onEditAvatar={handleEditAvatarClick}

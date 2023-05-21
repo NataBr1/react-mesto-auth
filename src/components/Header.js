@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../images/logo.svg';
 import { Link } from "react-router-dom";
 
-function Header({onClick, email, title, link}) {
+function Header({onClick, email, title, link, openMenuMobile, closeMenuMobile, isOpen}) {
   return (
     <header className="header">
       <img
@@ -14,10 +14,12 @@ function Header({onClick, email, title, link}) {
         <span className="autorize__email">{email}</span>
         <Link to={link} onClick={onClick} className="autorize__entry link-hover">{title}</Link>
       </div>
-      <button className="menu-mobile link-hover">
+      <button onClick={openMenuMobile} className={`${isOpen ? "menu-mobile_disactive": "menu-mobile link-hover"}`}>
         <hr className="menu-mobile__line"></hr>
         <hr className="menu-mobile__line"></hr>
         <hr className="menu-mobile__line"></hr>
+      </button>
+      <button onClick={closeMenuMobile} className={`${isOpen ? "autorize__closed": "autorize__closed_disactive"}`}>
       </button>
     </header>
   )
