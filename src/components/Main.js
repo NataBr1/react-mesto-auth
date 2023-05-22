@@ -25,8 +25,7 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
               className="profile__edit-button link-hover"
               type="button"
               aria-label="Редактировать профиль"
-              onClick={onEditProfile}
-            />
+              onClick={onEditProfile} />
             <p className="profile__subtitle">{currentUser.about}</p>
           </div>
 
@@ -36,21 +35,19 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
           className="profile__add-button link-hover"
           type="button"
           aria-label="Добавить место"
-          onClick={onAddPlace}
-        />
+          onClick={onAddPlace} />
 
       </section>
 
       {/* Карточки */}
       <section className="elements">
-        {cards.map((card, index) => (
+        {cards.map((card) => (
             <Card
-              key={index}
+              key={card._id}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}
-              card={card}
-            />
+              card={card} />
           ))}
       </section>
 

@@ -19,7 +19,6 @@ import * as auth from '../utils/auth.js';
 import success from '../images/success.svg'
 import error from '../images/error.svg'
 import hello from '../images/hello.png'
-import MenuMobile from './MenuMobile';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -247,12 +246,6 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <MenuMobile
-          isOpen={isMenuMobile}
-          onClick={signOut}
-          email={userEmail}
-          title="Выйти"
-          link="/sign-up"/>
         <Routes>
           <Route path="/sign-in" element={
             <>
@@ -275,7 +268,8 @@ function App() {
                 link="/sign-up"
                 openMenuMobile={handleOpenMenuMobile}
                 isOpen={isMenuMobile}
-                closeMenuMobile={closeAllPopups} />
+                closeMenuMobile={closeAllPopups}
+                loggedIn={loggedIn} />
               <ProtectedRoute element={Main}
                 loggedIn={loggedIn}
                 onEditAvatar={handleEditAvatarClick}

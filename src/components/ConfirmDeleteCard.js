@@ -18,8 +18,7 @@ function ConfirmDeleteCard({ isOpen, onClose, isLoading, onDeleteCard, card}) {
       classNameTitle="popup__title popup__title_deletecard"
       buttonTitle={isLoading ? 'Удаление...' : 'Да'}
       onClose={onClose}
-      onSubmit={handleSubmit} >
-    </PopupWithForm>
+      onSubmit={handleSubmit} />
   );
 }
 
