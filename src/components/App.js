@@ -27,7 +27,6 @@ function App() {
   const [isViewPhoto, setIsViewPhoto] = React.useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [isMenuMobile, setIsMenuMobile] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -227,10 +226,6 @@ function App() {
     setIsInfoTooltipOpen(true)
   }
 
-  function handleOpenMenuMobile() {
-    setIsMenuMobile(true)
-  }
-
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
@@ -238,7 +233,6 @@ function App() {
     setIsViewPhoto(false)
     setIsDeleteCardPopupOpen(false)
     setIsInfoTooltipOpen(false)
-    setIsMenuMobile(false)
     setSelectedCard(null)
   }
 
@@ -266,9 +260,6 @@ function App() {
                 email={userEmail}
                 title="Выйти"
                 link="/sign-up"
-                openMenuMobile={handleOpenMenuMobile}
-                isOpen={isMenuMobile}
-                closeMenuMobile={closeAllPopups}
                 loggedIn={loggedIn} />
               <ProtectedRoute element={Main}
                 loggedIn={loggedIn}
