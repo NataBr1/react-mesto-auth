@@ -15,7 +15,7 @@
 
 **Используемые технологии**
 <div>
-  <img src="./src/icons/html5.svg" alt="JavaScript" height="55">
+  <p>html<img src="./src/icons/html5.svg" alt="JavaScript" height="55"></p>
   <img src="./src/icons/CSS3_icon-icons.com_66989.png" alt="JavaScript" height="55">
   <img src="./src/icons/javascript.svg" alt="JavaScript" height="55">
   <img src="./src/icons/png-transparent-git-bash-hd-logo.png" alt="JavaScript" height="55">
