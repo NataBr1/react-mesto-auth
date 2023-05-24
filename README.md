@@ -19,11 +19,6 @@
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
   <img src="https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black">
-  <img src="./src/icons/html5.svg" alt="JavaScript" height="55">
-  <img src="./src/icons/CSS3_icon-icons.com_66989.png" alt="JavaScript" height="55">
-  <img src="./src/icons/javascript.svg" alt="JavaScript" height="55">
-  <img src="./src/icons/png-transparent-git-bash-hd-logo.png" alt="JavaScript" height="55">
-  <img src="./src/icons/react.svg" alt="JavaScript" height="55">
 </div>
 
 ***
