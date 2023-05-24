@@ -306,7 +306,7 @@ function App() {
             isOpen ={isInfoTooltipOpen}
             imgResAuth = {imgResAuth}
             textResAuth = {textResAuth}
-            onClose={setTimeout(closeAllPopups, 2000)}/>
+            onClose={closeAllPopups}/>
 
       </div>
     </CurrentUserContext.Provider>
