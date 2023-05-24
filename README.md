@@ -15,6 +15,10 @@
 
 **Используемые технологии**
 <div>
+  ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)&nbsp;
+  ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)&nbsp;
+  ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)&nbsp;
+  ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)&nbsp;
   <img src="./src/icons/html5.svg" alt="JavaScript" height="55">
   <img src="./src/icons/CSS3_icon-icons.com_66989.png" alt="JavaScript" height="55">
   <img src="./src/icons/javascript.svg" alt="JavaScript" height="55">
